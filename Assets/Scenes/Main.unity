@@ -2558,6 +2558,7 @@ GameObject:
   - component: {fileID: 548590661}
   - component: {fileID: 548590660}
   - component: {fileID: 548590659}
+  - component: {fileID: 548590662}
   m_Layer: 5
   m_Name: Option2
   m_TagString: Untagged
@@ -2629,8 +2630,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1749334661}
-        m_MethodName: OpenPlayMenu
+      - m_Target: {fileID: 548590662}
+        m_MethodName: CheckAnswer
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2680,6 +2681,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 548590657}
   m_CullTransparentMesh: 0
+--- !u!114 &548590662
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 548590657}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_GeneratorAsset: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: 132d81274f29a9640b4dd8f34f23640e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_GameScreen: {fileID: 1085386943}
+  m_Text: {fileID: 608072254}
+  m_ButtonImage: {fileID: 548590660}
 --- !u!1 &608072252
 GameObject:
   m_ObjectHideFlags: 0
@@ -4037,15 +4054,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_GeneratorAsset: {fileID: 0}
-  m_Script: {fileID: 11500000, guid: dfbb9c17d9de1f343a27fa8018e0665a, type: 3}
+  m_Script: {fileID: 11500000, guid: 99ca68dcc078e224bb6534fd4432e2a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  textInputs:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  inputValues: 00000000000000000000000000000000
+  options: 000000000000000000000000
+  question: 
+  operation: 
+  choices:
+  - {fileID: 1148649376}
+  - {fileID: 548590662}
+  - {fileID: 1965059078}
+  m_QuestionText: {fileID: 1376855343}
 --- !u!114 &1085386944
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4225,6 +4244,7 @@ GameObject:
   - component: {fileID: 1148649375}
   - component: {fileID: 1148649374}
   - component: {fileID: 1148649373}
+  - component: {fileID: 1148649376}
   m_Layer: 5
   m_Name: Option1
   m_TagString: Untagged
@@ -4296,8 +4316,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1749334661}
-        m_MethodName: OpenPlayMenu
+      - m_Target: {fileID: 1148649376}
+        m_MethodName: CheckAnswer
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4347,6 +4367,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1148649371}
   m_CullTransparentMesh: 0
+--- !u!114 &1148649376
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1148649371}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_GeneratorAsset: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: 132d81274f29a9640b4dd8f34f23640e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_GameScreen: {fileID: 1085386943}
+  m_Text: {fileID: 66204686}
+  m_ButtonImage: {fileID: 1148649374}
 --- !u!1 &1175355832
 GameObject:
   m_ObjectHideFlags: 0
@@ -7926,6 +7962,7 @@ GameObject:
   - component: {fileID: 1965059077}
   - component: {fileID: 1965059076}
   - component: {fileID: 1965059075}
+  - component: {fileID: 1965059078}
   m_Layer: 5
   m_Name: Option3
   m_TagString: Untagged
@@ -7997,8 +8034,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1749334661}
-        m_MethodName: OpenPlayMenu
+      - m_Target: {fileID: 1965059078}
+        m_MethodName: CheckAnswer
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -8048,6 +8085,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1965059073}
   m_CullTransparentMesh: 0
+--- !u!114 &1965059078
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1965059073}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_GeneratorAsset: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: 132d81274f29a9640b4dd8f34f23640e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_GameScreen: {fileID: 1085386943}
+  m_Text: {fileID: 400539544}
+  m_ButtonImage: {fileID: 1965059076}
 --- !u!1 &2020207143
 GameObject:
   m_ObjectHideFlags: 0

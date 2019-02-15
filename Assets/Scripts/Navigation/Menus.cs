@@ -23,6 +23,7 @@ namespace Navigation {
         public void OpenPlayMenu() {
             m_MainMenu.SetActive(false);
             m_SettingsMenu.SetActive(false);
+            m_JoinGame.SetActive(false);
             m_PlayMenu.SetActive(true);
         }
 
