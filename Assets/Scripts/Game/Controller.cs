@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
@@ -10,6 +11,7 @@ namespace Game {
         public OptionChoice[] choices = new OptionChoice[3];
 
         [SerializeField] private Text m_QuestionText;
+        [SerializeField] private Color m_ChoiceColour;
         
         private int m_Answer;
 
@@ -63,6 +65,10 @@ namespace Game {
             foreach (OptionChoice option in choices) {
                 option.SetColour(Color.red);
             }
+
+            if (m_Answer == answer) {
+                StartCoroutine(DelayForNext());
+            }
             return m_Answer == answer;
         }
         
@@ -72,6 +78,14 @@ namespace Game {
                 int r = Random.Range(i, list.Length);
                 list[i] = list[r];
                 list[r] = tmp;
+            }
+        }
+
+        private IEnumerator DelayForNext() {
+            yield return new WaitForSeconds(5);
+            NewQuestion();
+            foreach (OptionChoice option in choices) {
+                option.SetColour(m_ChoiceColour);
             }
         }
     }
