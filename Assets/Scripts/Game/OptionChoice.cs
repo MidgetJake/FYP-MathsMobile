@@ -10,10 +10,11 @@ namespace Game {
         [SerializeField] private Image m_ButtonImage;
 
         public void CheckAnswer() {
+            if (!m_GameScreen.canAnswer) return;
             if (m_GameScreen.CheckAnswer(m_Answer)) {
-                SetColour(Color.green);
+                SetColour(m_GameScreen.correctAnswerColour);
             } else {
-                SetColour(Color.red);
+                SetColour(m_GameScreen.wrongAnswerColour);
             }
         }
 

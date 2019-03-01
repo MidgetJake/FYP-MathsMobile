@@ -1,23 +1,38 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 namespace Game {
     public class Controller : MonoBehaviour {
+        public int maxHealth = 10;
+        public int health;
         public int[] options = new int[3];
         public string question;
         public string operation;
         public OptionChoice[] choices = new OptionChoice[3];
+        public bool canAnswer;
+        public Color buttonColour;
+        public Color correctAnswerColour;
+        public Color wrongAnswerColour;
 
         [SerializeField] private Text m_QuestionText;
+        [SerializeField] private RectTransform m_HealthBar;
         
         private int m_Answer;
 
         private void Start() {
+            health = maxHealth;
+            m_HealthBar.offsetMax = new Vector2(0, 24);
             NewQuestion();
         }
         
         public void NewQuestion() {
+            foreach (OptionChoice option in choices) {
+                option.SetColour(buttonColour);
+            }
+            
             int operationChoice = Mathf.FloorToInt(Random.Range(0,4));
             int firstNumberChoice = Mathf.FloorToInt(Random.Range(0,25));
             int secondNumberChoice = Mathf.FloorToInt(Random.Range(0,25));
@@ -57,12 +72,22 @@ namespace Game {
             choices[1].SetAnswer(options[1]);
             choices[2].SetAnswer(options[2]);
             m_QuestionText.text = question;
+            canAnswer = true;
         }
         
         public bool CheckAnswer(int answer) {
+            canAnswer = false;
             foreach (OptionChoice option in choices) {
-                option.SetColour(Color.red);
+                option.SetColour(wrongAnswerColour);
             }
+
+            if (m_Answer != answer) {
+                m_HealthBar.offsetMax = new Vector2(m_HealthBar.offsetMax.x - (Screen.width / maxHealth), 24);
+                health--;
+            }
+
+            StartCoroutine(WaitForQuestion());
+            
             return m_Answer == answer;
         }
         
@@ -73,6 +98,11 @@ namespace Game {
                 list[i] = list[r];
                 list[r] = tmp;
             }
+        }
+
+        private IEnumerator WaitForQuestion() {
+            yield return new WaitForSecondsRealtime(3f);
+            NewQuestion();
         }
     }
 }
