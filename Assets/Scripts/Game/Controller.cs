@@ -1,8 +1,8 @@
 ﻿using System.Collections;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
+using Global;
 
 namespace Game {
     public class Controller : MonoBehaviour {
@@ -28,14 +28,14 @@ namespace Game {
             NewQuestion();
         }
         
-        public void NewQuestion() {
+        private void NewQuestion() {
             foreach (OptionChoice option in choices) {
                 option.SetColour(buttonColour);
             }
             
             int operationChoice = Mathf.FloorToInt(Random.Range(0,4));
-            int firstNumberChoice = Mathf.FloorToInt(Random.Range(0,25));
-            int secondNumberChoice = Mathf.FloorToInt(Random.Range(0,25));
+            int firstNumberChoice = Mathf.FloorToInt(Random.Range(-25,25));
+            int secondNumberChoice = Mathf.FloorToInt(Random.Range(-25,25));
             
             switch(operationChoice) {
                 case 0:
@@ -48,10 +48,17 @@ namespace Game {
                     break;
                 case 2:
                     operation = "x";
+                    firstNumberChoice = Mathf.FloorToInt(Random.Range(2,12));
+                    secondNumberChoice = Mathf.FloorToInt(Random.Range(2,12));
                     m_Answer = firstNumberChoice * secondNumberChoice;
                     break;
                 default:
                     operation = "/";
+                    while (secondNumberChoice % firstNumberChoice != 0) {
+                        firstNumberChoice = Mathf.FloorToInt(Random.Range(2, 150));
+                        secondNumberChoice = Mathf.FloorToInt(Random.Range(2, 15));
+                    }
+
                     m_Answer = firstNumberChoice / secondNumberChoice;
                     break;
             }
@@ -86,6 +93,8 @@ namespace Game {
                 health--;
             }
 
+            Statistics.UpdateQuestion(operation, m_Answer == answer);
+            
             StartCoroutine(WaitForQuestion());
             
             return m_Answer == answer;
