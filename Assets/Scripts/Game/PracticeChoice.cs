@@ -2,20 +2,18 @@
 using UnityEngine.UI;
 
 namespace Game {
-    public class OptionChoice : MonoBehaviour {
+    public class PracticeChoice : MonoBehaviour {
         public int answer;
 
-        [SerializeField] private Controller m_GameScreen;
+        [SerializeField] private Practice m_GameScreen;
         [SerializeField] private Text m_Text;
         [SerializeField] private Image m_ButtonImage;
 
         public void CheckAnswer() {
             if (!m_GameScreen.canAnswer) return;
-            if (m_GameScreen.CheckAnswer(answer)) {
-                SetColour(m_GameScreen.correctAnswerColour);
-            } else {
-                SetColour(m_GameScreen.wrongAnswerColour);
-            }
+            SetColour(m_GameScreen.CheckAnswer(answer)
+                ? m_GameScreen.correctAnswerColour
+                : m_GameScreen.wrongAnswerColour);
         }
 
         public void SetAnswer(int newAnswer) {
@@ -24,7 +22,6 @@ namespace Game {
         }
 
         public void SetColour(Color colour) {
-            print("test colouring");
             m_ButtonImage.color = colour;
         }
     }

@@ -3,7 +3,7 @@
 --- !u!129 &1
 PlayerSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 17
+  serializedVersion: 16
   productGUID: 2a4281a172310a64bbb3602fbb6459a0
   AndroidProfiler: 0
   AndroidFilterTouchesWhenObscured: 0
@@ -65,7 +65,6 @@ PlayerSettings:
   disableDepthAndStencilBuffers: 0
   androidStartInFullscreen: 1
   androidRenderOutsideSafeArea: 0
-  androidUseSwappy: 0
   androidBlitType: 0
   defaultIsNativeResolution: 1
   macRetinaSupport: 1
@@ -163,7 +162,7 @@ PlayerSettings:
     Android: com.jakebarter.fypmaths
   buildNumber: {}
   AndroidBundleVersionCode: 1
-  AndroidMinSdkVersion: 22
+  AndroidMinSdkVersion: 26
   AndroidTargetSdkVersion: 0
   AndroidPreferredInstallLocation: 1
   aotOptions: 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using UI;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,6 +13,7 @@ namespace Scenes {
         private int m_Inputted = 0;
 
         [SerializeField] private GameObject m_GameScreen;
+        [SerializeField] private Dialog m_Dialog;
 
         private void Start() {
             foreach (Text text in textInputs) {
@@ -37,6 +39,8 @@ namespace Scenes {
             m_Inputted++;
             
             if (m_Inputted >= 4) {
+                m_Dialog.ShowDialog("Room does not exist, please try a different code");
+                return;
                 if (inputValues.Where((t, i) => t != roomCode[i]).Any()) {
                     hasCorrectCode = false;
                 }
