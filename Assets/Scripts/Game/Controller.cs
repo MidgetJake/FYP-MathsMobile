@@ -8,6 +8,8 @@ namespace Game {
     public class Controller : MonoBehaviour {
         public int maxHealth = 10;
         public int health;
+        public int opponentHealth;
+        
         public int[] options = new int[3];
         public string question;
         public string operation;
@@ -24,55 +26,13 @@ namespace Game {
 
         private void Start() {
             health = maxHealth;
+            opponentHealth = maxHealth;
             m_HealthBar.offsetMax = new Vector2(0, 24);
-            NewQuestion();
+            //NewQuestion();
         }
         
-        private void NewQuestion() {
-            foreach (OptionChoice option in choices) {
-                option.SetColour(buttonColour);
-            }
-            
-            int operationChoice = Mathf.FloorToInt(Random.Range(0,4));
-            int firstNumberChoice = Mathf.FloorToInt(Random.Range(-25,25));
-            int secondNumberChoice = Mathf.FloorToInt(Random.Range(-25,25));
-            
-            switch(operationChoice) {
-                case 0:
-                    operation = "+";
-                    m_Answer = firstNumberChoice + secondNumberChoice;
-                    break;
-                case 1:
-                    operation = "-";
-                    m_Answer = firstNumberChoice - secondNumberChoice;
-                    break;
-                case 2:
-                    operation = "x";
-                    firstNumberChoice = Mathf.FloorToInt(Random.Range(2,12));
-                    secondNumberChoice = Mathf.FloorToInt(Random.Range(2,12));
-                    m_Answer = firstNumberChoice * secondNumberChoice;
-                    break;
-                default:
-                    operation = "/";
-                    while (secondNumberChoice % firstNumberChoice != 0) {
-                        firstNumberChoice = Mathf.FloorToInt(Random.Range(2, 150));
-                        secondNumberChoice = Mathf.FloorToInt(Random.Range(2, 15));
-                    }
-
-                    m_Answer = firstNumberChoice / secondNumberChoice;
-                    break;
-            }
-
-            question = firstNumberChoice + operation + secondNumberChoice;
-            options[0] = m_Answer;
-            
-            int otherOption = m_Answer + Mathf.FloorToInt(Random.Range(-10, 10));
-            if (otherOption == m_Answer) otherOption++;
-            options[1] = otherOption;
-            
-            otherOption = m_Answer + Mathf.FloorToInt(Random.Range(-10, 10));
-            if (otherOption == m_Answer) otherOption--;
-            options[2] = otherOption;
+        private void NewQuestion(string questionString, int[] answers) {
+            options = answers;
             
             Shuffle(options);
             choices[0].SetAnswer(options[0]);
