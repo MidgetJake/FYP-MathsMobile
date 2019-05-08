@@ -25,7 +25,7 @@ namespace Global {
         
         public static void Connect() {
             try {
-                m_Client = new WebSocket("ws://localhost:1874");
+                m_Client = new WebSocket("ws://10.128.77.29:1874");
                 m_Client.OnMessage += (sender, message) => { CheckMessage(message.Data); };
                 m_Client.OnError += (sender, e) => { CheckMessage("{\"type\": \"error\", \"values\": []"); };
                 m_Client.OnClose += (sender, e) => { CheckMessage("{\"type\": \"error\", \"values\": []"); };
@@ -94,6 +94,19 @@ namespace Global {
                     Debug.Log("Failed to join");
                     if (m_Events.ContainsKey("failed-join")) {
                         m_Events["failed-join"](new object[] { "" });
+                    }
+                    break;
+                case "question-unanswered":
+                case "question-answered":
+                    Debug.Log(packet.type);
+                    if (m_Events.ContainsKey(packet.type)) {
+                        m_Events[packet.type](new object[] { int.Parse(packet.values[0]) });
+                    }
+                    break;
+                default:
+                    Debug.Log(packet.type);
+                    if (m_Events.ContainsKey(packet.type)) {
+                        m_Events[packet.type](new object[] { "" });
                     }
                     break;
             }

@@ -24,5 +24,9 @@ namespace UI {
                 m_OnCloseAction = onClose;
             }
         }
+
+        public void SilentCloseDialog() {
+            gameObject.SetActive(false);
+        }
     }
 }

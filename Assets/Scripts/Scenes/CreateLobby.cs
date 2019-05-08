@@ -5,12 +5,26 @@ using Global;
 namespace Scenes {
     public class CreateLobby : MonoBehaviour {
         [SerializeField] private Dialog m_Dialog;
+        [SerializeField] private GameObject m_GameScreen;
+        
+        private bool m_AttemptDone = false;
 
+        private void Update() {
+            if (!m_AttemptDone) return;
+            m_AttemptDone = false;
+            m_GameScreen.SetActive(true);
+            gameObject.SetActive(false);
+            m_Dialog.SilentCloseDialog();
+        }
+        
         public void CreateRoom() {
             try {
                 Socket.Connect();
                 Socket.On("start-room", objects => { Debug.Log(objects[0]); });
                 Socket.On("error", objects => { FailedToCreate(); });
+                Socket.On("joined-room", objects => {
+                    m_AttemptDone = true;
+                });
                 int roomCode = Socket.CreateRoom();
                 WaitingForPlayer(roomCode);
             } catch {

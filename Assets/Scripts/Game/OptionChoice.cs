@@ -9,22 +9,20 @@ namespace Game {
         [SerializeField] private Text m_Text;
         [SerializeField] private Image m_ButtonImage;
 
+        private int choiceIndex = -1;
+
         public void CheckAnswer() {
             if (!m_GameScreen.canAnswer) return;
-            if (m_GameScreen.CheckAnswer(answer)) {
-                SetColour(m_GameScreen.correctAnswerColour);
-            } else {
-                SetColour(m_GameScreen.wrongAnswerColour);
-            }
+            m_GameScreen.CheckAnswer(answer, choiceIndex);
         }
 
-        public void SetAnswer(int newAnswer) {
+        public void SetAnswer(int newAnswer, int index) {
             m_Text.text = newAnswer.ToString();
             answer = newAnswer;
+            choiceIndex = index;
         }
 
         public void SetColour(Color colour) {
-            print("test colouring");
             m_ButtonImage.color = colour;
         }
     }
