@@ -39,13 +39,13 @@ namespace Game {
         private bool m_IncorrectAnswer = false;
         private bool m_QuestionAnswered = false;
         private bool m_QuestionUnanswered = false;
+        private string m_LastQuestionType;
         private int m_AnsweredIndex = 0;
         private int m_ActualAnswer;
         private bool m_Started;
         private bool m_Win;
         private bool m_Lose;
         private float m_Offset = ((Screen.width) / 10f) + 6.5f;
-        private float m_SWidth = Screen.width;
         private float m_CurrEnemyOffset = 0;
         private float m_CurrOffset = 0;
 
@@ -58,12 +58,15 @@ namespace Game {
         }
 
         private void Setup() {
+            m_ReadyText.SetActive(true);
+            m_Content.SetActive(false);
             health = maxHealth;
             opponentHealth = maxHealth;
             Socket.On("get-question", objects => {
                 question = (string) objects[0];
                 options = new int[] {(int) objects[1], (int) objects[2], (int) objects[3]};
                 m_NewQuestion = true;
+                m_LastQuestionType = (string) objects[4];
             });
             Socket.On("question-answered", objects => {
                 m_QuestionAnswered = true;
@@ -90,6 +93,7 @@ namespace Game {
             }
 
             if (m_QuestionAnswered || m_QuestionUnanswered) {
+                Statistics.UpdateQuestion(m_LastQuestionType, false);
                 foreach (OptionChoice option in choices) {
                     option.SetColour(option.answer == m_ActualAnswer ? correctAnswerColour : wrongAnswerColour);
                 }
@@ -119,16 +123,19 @@ namespace Game {
                 
                 choices[m_AnsweredIndex].SetColour(correctAnswerColour);
                 m_AttackSystem.Play();
+                Statistics.UpdateQuestion(m_LastQuestionType, true);
                 StartCoroutine(WaitForParticle(true));
             }
 
             if (m_Win) {
                 m_Win = false;
+                Statistics.PlayGame(true);
                 StartCoroutine(WaitForEnd(true));
             }
             
             if (m_Lose) {
                 m_Lose = false;
+                Statistics.PlayGame(false);
                 StartCoroutine(WaitForEnd(false));
             }
         }

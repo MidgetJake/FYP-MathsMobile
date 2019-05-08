@@ -2,7 +2,7 @@
 
 namespace Global {
     public static class Statistics {
-        private static bool m_IsReady;
+        public static bool IsReady;
         private static ThreeHold m_GamesPlayed; // Wins/Losses/GamesPlayed
         private static ThreeHold m_Addition; // Correct/Wrong/Total
         private static ThreeHold m_Subtraction; // Correct/Wrong/Total
@@ -20,34 +20,60 @@ namespace Global {
         public static void PlayGame(bool win) {
             if (win) {
                 m_GamesPlayed.Positive++;
+                PlayerPrefs.SetInt("Wins", m_GamesPlayed.Positive);
             } else {
                 m_GamesPlayed.Negative++;
+                PlayerPrefs.SetInt("Losses", m_GamesPlayed.Negative);
             }
         }
 
         public static void UpdateQuestion(string type, bool correct) {
-            ThreeHold toUpdate;
             switch (type) {
                 case "+":
-                    toUpdate = m_Addition;
+                    if (correct) {
+                        m_Addition.Positive++;
+                    } else {
+                        m_Addition.Negative++;
+                    }
                     break;
                 case "-":
-                    toUpdate = m_Subtraction;
+                    if (correct) {
+                        m_Subtraction.Positive++;
+                    } else {
+                        m_Subtraction.Negative++;
+                    }
                     break;
                 case "x":
-                    toUpdate = m_Multiplication;
+                    if (correct) {
+                        m_Multiplication.Positive++;
+                    } else {
+                        m_Multiplication.Negative++;
+                    }
                     break;
                 case "/":
                 default:
-                    toUpdate = m_Division;
+                    if (correct) {
+                        m_Division.Positive++;
+                    } else {
+                        m_Division.Negative++;
+                    }
                     break;
             }
+            
+            SetAll();
+        }
 
-            if (correct) {
-                toUpdate.Positive++;
-            } else {
-                toUpdate.Negative++;
-            }
+        private static void SetAll() {
+            PlayerPrefs.SetInt("Wins", m_GamesPlayed.Positive);
+            PlayerPrefs.SetInt("Losses", m_GamesPlayed.Negative);
+            PlayerPrefs.SetInt("AdditionCorrect", m_Addition.Positive);
+            PlayerPrefs.SetInt("AdditionIncorrect", m_Addition.Negative);
+            PlayerPrefs.SetInt("SubtractionCorrect", m_Subtraction.Positive);
+            PlayerPrefs.SetInt("SubtractionIncorrect", m_Subtraction.Negative);
+            PlayerPrefs.SetInt("MultiplicationCorrect", m_Multiplication.Positive);
+            PlayerPrefs.SetInt("MultiplicationIncorrect", m_Multiplication.Negative);
+            PlayerPrefs.SetInt("DivisionCorrect", m_Division.Positive);
+            PlayerPrefs.SetInt("DivisionIncorrect", m_Division.Negative);
         }
 
         public static void Init() {
@@ -61,8 +87,47 @@ namespace Global {
                 PlayerPrefs.SetInt("Losses", m_GamesPlayed.Negative);
             }
 
-            m_IsReady = true;
+            if (PlayerPrefs.HasKey("AdditionCorrect")) {
+                m_Addition.Positive = PlayerPrefs.GetInt("AdditionCorrect");
+                m_Addition.Negative = PlayerPrefs.GetInt("AdditionIncorrect");
+            } else {
+                m_Addition.Positive = 0;
+                m_Addition.Negative = 0;
+                PlayerPrefs.SetInt("AdditionCorrect", m_Addition.Positive);
+                PlayerPrefs.SetInt("AdditionIncorrect", m_Addition.Negative);
+            }
+            
+            if (PlayerPrefs.HasKey("SubtractionCorrect")) {
+                m_Subtraction.Positive = PlayerPrefs.GetInt("SubtractionCorrect");
+                m_Subtraction.Negative = PlayerPrefs.GetInt("SubtractionIncorrect");
+            } else {
+                m_Subtraction.Positive = 0;
+                m_Subtraction.Negative = 0;
+                PlayerPrefs.SetInt("SubtractionCorrect", m_Subtraction.Positive);
+                PlayerPrefs.SetInt("SubtractionIncorrect", m_Subtraction.Negative);
+            }
+            
+            if (PlayerPrefs.HasKey("MultiplicationCorrect")) {
+                m_Multiplication.Positive = PlayerPrefs.GetInt("MultiplicationCorrect");
+                m_Multiplication.Negative = PlayerPrefs.GetInt("MultiplicationIncorrect");
+            } else {
+                m_Multiplication.Positive = 0;
+                m_Multiplication.Negative = 0;
+                PlayerPrefs.SetInt("MultiplicationCorrect", m_Multiplication.Positive);
+                PlayerPrefs.SetInt("MultiplicationIncorrect", m_Multiplication.Negative);
+            }
+            
+            if (PlayerPrefs.HasKey("DivisionCorrect")) {
+                m_Division.Positive = PlayerPrefs.GetInt("DivisionCorrect");
+                m_Division.Negative = PlayerPrefs.GetInt("DivisionIncorrect");
+            } else {
+                m_Division.Positive = 0;
+                m_Division.Negative = 0;
+                PlayerPrefs.SetInt("DivisionCorrect", m_Division.Positive);
+                PlayerPrefs.SetInt("DivisionIncorrect", m_Division.Negative);
+            }
 
+            IsReady = true;
         }
     }
 

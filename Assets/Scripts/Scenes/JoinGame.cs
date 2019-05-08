@@ -22,6 +22,17 @@ namespace Scenes {
             }
         }
 
+        private void Awake() {
+            foreach (Text text in textInputs) {
+                text.text = "";
+            }
+
+            m_Inputted = 0;
+            inputValues = new int[4];
+            m_AttemptDone = false;
+            m_Failed = false;
+        }
+
         private void Update() {
             if (m_AttemptDone) {
                 m_AttemptDone = false;

@@ -81,7 +81,7 @@ namespace Global {
                 case "get-question":
                     Debug.Log("Question");
                     if (m_Events.ContainsKey("get-question")) {
-                        m_Events["get-question"](new object[] { packet.values[0], int.Parse(packet.values[1]), int.Parse(packet.values[2]), int.Parse(packet.values[3]) });
+                        m_Events["get-question"](new object[] { packet.values[0], int.Parse(packet.values[1]), int.Parse(packet.values[2]), int.Parse(packet.values[3]), packet.values[4] });
                     }
                     break;
                 case "joined-room":
