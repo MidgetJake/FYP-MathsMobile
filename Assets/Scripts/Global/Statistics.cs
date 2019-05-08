@@ -63,6 +63,20 @@ namespace Global {
             SetAll();
         }
 
+        public static void ResetStats() {
+            m_GamesPlayed.Positive = 0;
+            m_GamesPlayed.Negative = 0;
+            m_Addition.Positive = 0;
+            m_Addition.Negative = 0;
+            m_Subtraction.Positive = 0;
+            m_Subtraction.Negative = 0;
+            m_Multiplication.Positive = 0;
+            m_Multiplication.Negative = 0;
+            m_Division.Positive = 0;
+            m_Division.Negative = 0;
+            SetAll();
+        }
+        
         private static void SetAll() {
             PlayerPrefs.SetInt("Wins", m_GamesPlayed.Positive);
             PlayerPrefs.SetInt("Losses", m_GamesPlayed.Negative);
